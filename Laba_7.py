@@ -32,18 +32,26 @@ class buying_laptops:
         self.maxs = self.cntcomps = self.cnttips = self.dm = 0
         self.BRANDS = ['Apple', 'Asus', 'Dell', 'HP', 'Lenovo', 'Acer', 'MSI', 'Samsung']
 
-        self.cntcomps = int(input('\nВведите кол-во покупаемых компьютеров: '))
-        while self.cntcomps < 0:
-            self.cntcomps = int(input('\nПринимаются только положительные числа: '))
-        if not self.cntcomps:
-            print('\nОчень умно! Вы решили сэкономить деньги и не купили ни одного компьютера.')
+        try:
+            self.cntcomps = int(input('\nВведите кол-во покупаемых компьютеров: '))
+            while self.cntcomps < 0:
+                self.cntcomps = int(input('\nПринимаются только положительные числа: '))
+            if not self.cntcomps:
+                print('\nОчень умно! Вы решили сэкономить деньги и не купили ни одного компьютера.')
+                quit()
+        except ValueError:
+            print('Вводите только одно число. Не буквы.')
             quit()
 
-        self.cnttips = int(input('\nВведите кол-во типов компьютеров: '))
-        while self.cnttips < 0:
-            self.cnttips = int(input('\nПринимаются только положительные числа: '))
-        if not self.cnttips:
-            print('\nКажется, сегодня мы остались без покупок.')
+        try:
+            self.cnttips = int(input('\nВведите кол-во типов компьютеров: '))
+            while self.cnttips < 0:
+                self.cnttips = int(input('\nПринимаются только положительные числа: '))
+            if not self.cnttips:
+                print('\nКажется, сегодня мы остались без покупок.')
+                quit()
+        except ValueError:
+            print('Вводите только одно число. Не буквы.')
             quit()
 
         try:
@@ -60,7 +68,7 @@ class buying_laptops:
 
         if self.switch:
             print('\nУсложнением будет являться качество производителя.\nЕсли качество производителя низкое, то данный'
-                  ' производитель не будет учитываться в рассмотрении его к покупке.\nТак же у каждого компьютера есть '
+                  'производитель не будет учитываться в рассмотрении его к покупке.\nТак же у каждого компьютера есть '
                   'своя стоимость. Вывести вариант покупки с максимальной суммарной стоимостью.')
 
             self.computers = [f'{choice(self.BRANDS)} ({randrange(10999, 99999, 1000)} р.)' for i in
@@ -103,18 +111,19 @@ class buying_laptops:
             print('\nКажется, сегодня мы остались без покупок.')
             quit()
 
+        if ((self.cntcomps > 4 and len(self.computers) > 8) or (
+                self.cntcomps > 9 or len(self.computers) > 12)) and not self.dm:
+            self.dm = int(input(f'\nВы ввели большие значения K или N, работа программы может занять существенное '
+                                f'время. Хотите дождаться вывода? ( Да = 1 | Нет = 0 ): '))
+            while not self.dm and self.dm:
+                self.dm = int(input('Принимаются только значения "0" и "1": '))
+            if not self.dm:
+                quit()
+            print('\nПодождите...')
+
         for i, varu in enumerate(product(self.computers, repeat=self.cntcomps)):
             s = 0
             b = {}
-
-            if ((self.cntcomps > 4 and len(self.computers) > 8) or (self.cntcomps > 9 or len(self.computers) > 12)) and not self.dm:
-                self.dm = int(input(f'\nВы ввели большие значения K или N, работа программы может занять существенное '
-                              f'время. Хотите дождаться вывода? ( Да = 1 | Нет = 0 ): '))
-                while not self.dm and self.dm:
-                    self.dm = int(input('Принимаются только значения "0" и "1": '))
-                if not self.dm:
-                    quit()
-                print('\nПодождите...')
 
             for j in sorted(varu):
                 if j in b:
