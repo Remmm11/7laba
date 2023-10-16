@@ -37,7 +37,7 @@ class buying_laptops:
             while self.cntcomps < 0:
                 self.cntcomps = int(input('\nПринимаются только положительные числа: '))
             if not self.cntcomps:
-                print('\nОчень умно! Вы решили сэкономить деньги и не купили ни одного компьютера.')
+                print('\nВы решили сэкономить деньги и не купили ни одного компьютера.')
                 quit()
         except ValueError:
             print('Вводите только одно число. Не буквы.')
